@@ -62,3 +62,63 @@ feature_importance
 # %%
 feature_importance[feature_importance['acum.'] < 0.96]
 # %%
+
+best_features = feature_importance[feature_importance['acum.'] < 0.96]['index'].tolist()
+best_features
+# %%
+
+#MODIFY
+
+from feature_engine import discretisation  
+
+tree_discretization= discretisation.DecisionTreeDiscretiser(
+    variables = best_features, regression= False, cv=3
+)
+
+tree_discretization.fit(X_train[best_features], y_train)
+# %%
+X_train.head()
+# %%
+X_train_transformed = tree_discretization.transform(X_train[best_features])
+X_train_transformed
+# %%
+
+#MODEL
+from sklearn import linear_model
+reg= linear_model.LogisticRegression(penalty=None, random_state=42)
+reg.fit(X_train_transformed, y_train)
+# %%
+from sklearn import metrics 
+
+y_train_predict= reg.predict(X_train_transformed)
+y_train_proba= reg.predict_proba(X_train_transformed)[:, 1]
+
+acc_train= metrics.accuracy_score(y_train, y_train_predict)
+auc_train= metrics.roc_auc_score(y_train, y_train_proba)
+
+print("Acurácia treino: ", acc_train)
+print("AUC treino: ", auc_train)
+# %%
+X_test_transform = tree_discretization.transform(X_test[best_features])    
+
+y_test_predict= reg.predict(X_test_transform)
+y_test_proba= reg.predict_proba(X_test_transform)[:, 1]
+
+acc_test= metrics.accuracy_score(y_test, y_test_predict)
+auc_test= metrics.roc_auc_score(y_test, y_test_proba)
+
+print("Acurácia test: ", acc_test)
+print("AUC test: ", auc_test)
+# %%
+
+oot_transform = tree_discretization.transform(oot[best_features])
+
+y_oot_predict= reg.predict(oot_transform)
+y_oot_proba= reg.predict_proba(oot_transform)[:, 1]
+
+acc_oot= metrics.accuracy_score(oot[target], y_oot_predict)
+auc_oot= metrics.roc_auc_score(oot[target], y_oot_proba)
+
+print("Acurácia oot: ", acc_oot)
+print("AUC oot: ", auc_oot)
+# %%
