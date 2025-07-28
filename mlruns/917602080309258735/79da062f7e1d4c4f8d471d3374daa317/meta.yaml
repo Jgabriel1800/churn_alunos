@@ -1,0 +1,14 @@
+artifact_uri: file:///c:/Users/jgabr/OneDrive/%C3%81rea%20de%20Trabalho/churn_alunos/churn_alunos/mlruns/917602080309258735/79da062f7e1d4c4f8d471d3374daa317/artifacts
+end_time: 1753726331475
+entry_point_name: ''
+experiment_id: '917602080309258735'
+lifecycle_stage: active
+run_id: 79da062f7e1d4c4f8d471d3374daa317
+run_name: big-rat-743
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753726094758
+status: 3
+tags: []
+user_id: jgabr

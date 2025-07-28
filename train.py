@@ -11,6 +11,7 @@ from sklearn import linear_model
 from sklearn import naive_bayes
 from sklearn import ensemble
 from sklearn.model_selection import GridSearchCV
+from sklearn import metrics 
 
 df=pd.read_csv('data/abt_alunos.csv', sep=',')
 df.head()
@@ -95,70 +96,86 @@ onehot= encoding.OneHotEncoder(variables=best_features, ignore_format= True)
 # %%
 
 #MODEL
+mlflow.set_tracking_uri("http://127.0.0.1:5000/")
+mlflow.set_experiment(experiment_name="churn_alunos")
+
+with mlflow.start_run():
+
+    mlflow.sklearn.autolog()
+
+    model=ensemble.RandomForestClassifier(random_state=42,
+                                        n_jobs=2
+                                        )
 
 
-model=ensemble.RandomForestClassifier(random_state=42,
-                                    n_jobs=2
-                                    )
+
+
+    #Criando o grid
+
+    params={
+        "min_samples_leaf":[15,20,25,30,50],
+        "n_estimators":[100,200,500,1000],
+        "criterion":['gini','entropy','log_loss'],
+
+    }
+
+
+    grid= model_selection.GridSearchCV( model, 
+                                    params, 
+                                    cv=3, 
+                                    scoring='roc_auc', 
+                                    verbose=4)
+    model_pipeline=pipeline.Pipeline(steps=[
+        ('discetrizar',tree_discretization),
+                                            ('onehot',onehot),
+                                            ('Grid',grid)])
 
 
 
 
-#Criando o grid
 
-params={
-    "min_samples_leaf":[15,20,25,30,50],
-    "n_estimators":[100,200,500,1000],
-    "criterion":['gini','entropy','log_loss'],
-
-}
+    model_pipeline.fit(X_train, y_train)
 
 
-grid= model_selection.GridSearchCV( model, 
-                                   params, 
-                                   cv=3, 
-                                   scoring='roc_auc', 
-                                   verbose=4)
-model_pipeline=pipeline.Pipeline(steps=[('discetrizar',tree_discretization),
-                                        ('onehot',onehot),
-                                        ('Grid',grid)])
+#ASSES
+    y_train_predict= model_pipeline.predict(X_train)
+    y_train_proba= model_pipeline.predict_proba(X_train)[:, 1]
+
+    acc_train= metrics.accuracy_score(y_train, y_train_predict)
+    auc_train= metrics.roc_auc_score(y_train, y_train_proba)
+    roc_train=metrics.roc_curve(y_train, y_train_proba)
+
+    print("Acurácia treino: ", acc_train)
+    print("AUC treino: ", auc_train)
+    y_test_predict= model_pipeline.predict(X_test)
+    y_test_proba= model_pipeline.predict_proba(X_test)[:, 1]
+
+    acc_test= metrics.accuracy_score(y_test, y_test_predict)
+    auc_test= metrics.roc_auc_score(y_test, y_test_proba)
+    roc_test=metrics.roc_curve(y_test, y_test_proba)
+
+    print("Acurácia test: ", acc_test)
+    print("AUC test: ", auc_test)
 
 
-from sklearn import metrics 
+    y_oot_predict= model_pipeline.predict(oot[features])
+    y_oot_proba= model_pipeline.predict_proba(oot[features])[:, 1]
 
+    acc_oot= metrics.accuracy_score(oot[target], y_oot_predict)
+    auc_oot= metrics.roc_auc_score(oot[target], y_oot_proba)
+    roc_oot=metrics.roc_curve(oot[target], y_oot_proba)
 
-model_pipeline.fit(X_train, y_train)
+    print("Acurácia oot: ", acc_oot)
+    print("AUC oot: ", auc_oot)
 
-
-y_train_predict= model_pipeline.predict(X_train)
-y_train_proba= model_pipeline.predict_proba(X_train)[:, 1]
-
-acc_train= metrics.accuracy_score(y_train, y_train_predict)
-auc_train= metrics.roc_auc_score(y_train, y_train_proba)
-roc_train=metrics.roc_curve(y_train, y_train_proba)
-
-print("Acurácia treino: ", acc_train)
-print("AUC treino: ", auc_train)
-y_test_predict= model_pipeline.predict(X_test)
-y_test_proba= model_pipeline.predict_proba(X_test)[:, 1]
-
-acc_test= metrics.accuracy_score(y_test, y_test_predict)
-auc_test= metrics.roc_auc_score(y_test, y_test_proba)
-roc_test=metrics.roc_curve(y_test, y_test_proba)
-
-print("Acurácia test: ", acc_test)
-print("AUC test: ", auc_test)
-
-
-y_oot_predict= model_pipeline.predict(oot[features])
-y_oot_proba= model_pipeline.predict_proba(oot[features])[:, 1]
-
-acc_oot= metrics.accuracy_score(oot[target], y_oot_predict)
-auc_oot= metrics.roc_auc_score(oot[target], y_oot_proba)
-roc_oot=metrics.roc_curve(oot[target], y_oot_proba)
-
-print("Acurácia oot: ", acc_oot)
-print("AUC oot: ", auc_oot)
+    mlflow.log_metrics({
+    "acc_train":acc_train,
+    "auc_train":auc_train,
+    "acc_test":acc_test,
+    "auc_test":auc_test,
+    "acc_oot":acc_oot,
+    "auc_oot":auc_oot,
+    })
 
     
 # %%
@@ -178,7 +195,7 @@ plt.legend([
 # %%
 # Salvando o estado do nosso modelo
 model_df = pd.Series({"model": model_pipeline,
-                        "features": best_features,})
+                        "features": best_features})
 
 model_df.to_pickle('model.pkl')
 # %%

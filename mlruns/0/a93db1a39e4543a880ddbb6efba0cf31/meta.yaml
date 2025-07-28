@@ -1,0 +1,14 @@
+artifact_uri: file:///c:/Users/jgabr/OneDrive/%C3%81rea%20de%20Trabalho/churn_alunos/churn_alunos/mlruns/0/a93db1a39e4543a880ddbb6efba0cf31/artifacts
+end_time: 1753725764211
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: a93db1a39e4543a880ddbb6efba0cf31
+run_name: worried-goat-828
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753725753088
+status: 3
+tags: []
+user_id: jgabr

@@ -1,0 +1,14 @@
+artifact_uri: file:///c:/Users/jgabr/OneDrive/%C3%81rea%20de%20Trabalho/churn_alunos/churn_alunos/mlruns/0/c3f8790dcbf146b3946d3b2143fa213e/artifacts
+end_time: 1753725725183
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: c3f8790dcbf146b3946d3b2143fa213e
+run_name: mercurial-crane-596
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753725534831
+status: 4
+tags: []
+user_id: jgabr

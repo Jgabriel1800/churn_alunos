@@ -1,0 +1,38 @@
+digest: 0c52cb47
+name: dataset
+profile: '{"num_rows": 303, "num_elements": 12120}'
+schema: '{"mlflow_colspec": [{"type": "long", "name": "qtdeAulasAssistidas", "required":
+  true}, {"type": "long", "name": "qtdeDiasAtivos", "required": true}, {"type": "double",
+  "name": "mediaAulasPorDia", "required": true}, {"type": "long", "name": "notaFinal",
+  "required": true}, {"type": "long", "name": "qtdePontosExtras", "required": true},
+  {"type": "long", "name": "qtdePenalidades", "required": true}, {"type": "double",
+  "name": "qtdeDiasUltimaAula", "required": true}, {"type": "double", "name": "qtdeDiasPrimeiraAula",
+  "required": true}, {"type": "long", "name": "qtdCursosDistintos", "required": true},
+  {"type": "long", "name": "qtdePerguntasNoForum", "required": true}, {"type": "long",
+  "name": "qtdePresencasWebinar", "required": true}, {"type": "long", "name": "qtdeTrocaTurma",
+  "required": true}, {"type": "long", "name": "qtdeTentativasDesistencia", "required":
+  true}, {"type": "long", "name": "qtdeProjetosExtras", "required": true}, {"type":
+  "long", "name": "qtdeCertificados", "required": true}, {"type": "long", "name":
+  "qtdeDiasConsecutivos", "required": true}, {"type": "long", "name": "qtdeDesafiosDiarios",
+  "required": true}, {"type": "long", "name": "qtdeGruposEstudo", "required": true},
+  {"type": "long", "name": "qtdeItensVendidosFeira", "required": true}, {"type": "long",
+  "name": "qtdeAulasAssistidasD7", "required": true}, {"type": "long", "name": "qtdeDiasAtivosD7",
+  "required": true}, {"type": "long", "name": "notaFinalD7", "required": true}, {"type":
+  "long", "name": "qtdePontosExtrasD7", "required": true}, {"type": "long", "name":
+  "qtdePenalidadesD7", "required": true}, {"type": "long", "name": "qtdeAulasAssistidasD14",
+  "required": true}, {"type": "long", "name": "qtdeDiasAtivosD14", "required": true},
+  {"type": "long", "name": "notaFinalD14", "required": true}, {"type": "long", "name":
+  "qtdePontosExtrasD14", "required": true}, {"type": "long", "name": "qtdePenalidadesD14",
+  "required": true}, {"type": "long", "name": "qtdeAulasAssistidasD28", "required":
+  true}, {"type": "long", "name": "qtdeDiasAtivosD28", "required": true}, {"type":
+  "long", "name": "notaFinalD28", "required": true}, {"type": "long", "name": "qtdePontosExtrasD28",
+  "required": true}, {"type": "long", "name": "qtdePenalidadesD28", "required": true},
+  {"type": "double", "name": "propAvgQtdeAulasAssistidas", "required": true}, {"type":
+  "double", "name": "propAvgQtdeDiasAtivos", "required": true}, {"type": "double",
+  "name": "propAvgMediaAulasPorDia", "required": true}, {"type": "double", "name":
+  "propAvgNotaFinal", "required": true}, {"type": "double", "name": "propAvgQtdePontosExtras",
+  "required": true}, {"type": "double", "name": "propAvgQtdePenalidades", "required":
+  true}]}'
+source: '{"tags": {"mlflow.user": "jgabr", "mlflow.source.name": "c:\\Users\\jgabr\\anaconda3\\Lib\\site-packages\\ipykernel_launcher.py",
+  "mlflow.source.type": "LOCAL"}}'
+source_type: code

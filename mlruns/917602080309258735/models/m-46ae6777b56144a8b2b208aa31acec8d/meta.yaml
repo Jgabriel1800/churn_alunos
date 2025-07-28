@@ -1,0 +1,10 @@
+artifact_location: file:///c:/Users/jgabr/OneDrive/%C3%81rea%20de%20Trabalho/churn_alunos/churn_alunos/mlruns/917602080309258735/models/m-46ae6777b56144a8b2b208aa31acec8d/artifacts
+creation_timestamp: 1753726316136
+experiment_id: '917602080309258735'
+last_updated_timestamp: 1753726324881
+model_id: m-46ae6777b56144a8b2b208aa31acec8d
+model_type: null
+name: model
+source_run_id: 79da062f7e1d4c4f8d471d3374daa317
+status: 2
+status_message: null

@@ -1,0 +1,60 @@
+artifact_path: file:///c:/Users/jgabr/OneDrive/%C3%81rea%20de%20Trabalho/churn_alunos/churn_alunos/mlruns/0/models/m-93ff3a2e747f4d6dbaf0d2f76845adeb/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.7
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.5.1
+is_signature_from_type_hint: false
+mlflow_version: 3.1.3
+model_id: m-93ff3a2e747f4d6dbaf0d2f76845adeb
+model_size_bytes: 2369839
+model_uuid: m-93ff3a2e747f4d6dbaf0d2f76845adeb
+prompts: null
+run_id: b137c6a42389447b8fc9f3733d8a11d8
+signature:
+  inputs: '[{"type": "long", "name": "qtdeAulasAssistidas", "required": true}, {"type":
+    "long", "name": "qtdeDiasAtivos", "required": true}, {"type": "double", "name":
+    "mediaAulasPorDia", "required": true}, {"type": "long", "name": "notaFinal", "required":
+    true}, {"type": "long", "name": "qtdePontosExtras", "required": true}, {"type":
+    "long", "name": "qtdePenalidades", "required": true}, {"type": "double", "name":
+    "qtdeDiasUltimaAula", "required": true}, {"type": "double", "name": "qtdeDiasPrimeiraAula",
+    "required": true}, {"type": "long", "name": "qtdCursosDistintos", "required":
+    true}, {"type": "long", "name": "qtdePerguntasNoForum", "required": true}, {"type":
+    "long", "name": "qtdePresencasWebinar", "required": true}, {"type": "long", "name":
+    "qtdeTrocaTurma", "required": true}, {"type": "long", "name": "qtdeTentativasDesistencia",
+    "required": true}, {"type": "long", "name": "qtdeProjetosExtras", "required":
+    true}, {"type": "long", "name": "qtdeCertificados", "required": true}, {"type":
+    "long", "name": "qtdeDiasConsecutivos", "required": true}, {"type": "long", "name":
+    "qtdeDesafiosDiarios", "required": true}, {"type": "long", "name": "qtdeGruposEstudo",
+    "required": true}, {"type": "long", "name": "qtdeItensVendidosFeira", "required":
+    true}, {"type": "long", "name": "qtdeAulasAssistidasD7", "required": true}, {"type":
+    "long", "name": "qtdeDiasAtivosD7", "required": true}, {"type": "long", "name":
+    "notaFinalD7", "required": true}, {"type": "long", "name": "qtdePontosExtrasD7",
+    "required": true}, {"type": "long", "name": "qtdePenalidadesD7", "required": true},
+    {"type": "long", "name": "qtdeAulasAssistidasD14", "required": true}, {"type":
+    "long", "name": "qtdeDiasAtivosD14", "required": true}, {"type": "long", "name":
+    "notaFinalD14", "required": true}, {"type": "long", "name": "qtdePontosExtrasD14",
+    "required": true}, {"type": "long", "name": "qtdePenalidadesD14", "required":
+    true}, {"type": "long", "name": "qtdeAulasAssistidasD28", "required": true}, {"type":
+    "long", "name": "qtdeDiasAtivosD28", "required": true}, {"type": "long", "name":
+    "notaFinalD28", "required": true}, {"type": "long", "name": "qtdePontosExtrasD28",
+    "required": true}, {"type": "long", "name": "qtdePenalidadesD28", "required":
+    true}, {"type": "double", "name": "propAvgQtdeAulasAssistidas", "required": true},
+    {"type": "double", "name": "propAvgQtdeDiasAtivos", "required": true}, {"type":
+    "double", "name": "propAvgMediaAulasPorDia", "required": true}, {"type": "double",
+    "name": "propAvgNotaFinal", "required": true}, {"type": "double", "name": "propAvgQtdePontosExtras",
+    "required": true}, {"type": "double", "name": "propAvgQtdePenalidades", "required":
+    true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-07-28 17:54:20.381890'

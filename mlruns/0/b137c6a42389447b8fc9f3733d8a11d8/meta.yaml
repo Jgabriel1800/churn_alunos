@@ -1,0 +1,14 @@
+artifact_uri: file:///c:/Users/jgabr/OneDrive/%C3%81rea%20de%20Trabalho/churn_alunos/churn_alunos/mlruns/0/b137c6a42389447b8fc9f3733d8a11d8/artifacts
+end_time: 1753725284733
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: b137c6a42389447b8fc9f3733d8a11d8
+run_name: sassy-shrew-898
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753724979741
+status: 3
+tags: []
+user_id: jgabr
