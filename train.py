@@ -2,6 +2,15 @@
 
 import mlflow.sklearn
 import pandas as pd
+from matplotlib import pyplot as plt
+from sklearn import  model_selection 
+from sklearn import tree
+from feature_engine import discretisation  , encoding
+from sklearn import pipeline
+from sklearn import linear_model
+from sklearn import naive_bayes
+from sklearn import ensemble
+from sklearn.model_selection import GridSearchCV
 
 df=pd.read_csv('data/abt_alunos.csv', sep=',')
 df.head()
@@ -25,7 +34,7 @@ X,y= df_train[features], df_train[target]
 # %%
 
 # SAMPLE
-from sklearn import  model_selection 
+
 
 X_train,X_test,y_train,y_test=model_selection.train_test_split(X,y,test_size=0.2,random_state=42,stratify=y)
 # %%
@@ -51,7 +60,7 @@ sumario['diff_abs']=sumario[0]-sumario[1]
 sumario['dif_rel']=sumario[0]/sumario[1]
 sumario.sort_values(by=['dif_rel'],ascending=False)
 # %%
-from sklearn import tree
+
 arvore = tree.DecisionTreeClassifier( random_state=42)
 arvore.fit(X_train, y_train)
 # %%
@@ -70,8 +79,6 @@ best_features
 
 #MODIFY
 
-from feature_engine import discretisation  , encoding
-from sklearn import pipeline
 
 #Discretizar
 tree_discretization= discretisation.DecisionTreeDiscretiser(
@@ -88,22 +95,35 @@ onehot= encoding.OneHotEncoder(variables=best_features, ignore_format= True)
 # %%
 
 #MODEL
-from sklearn import linear_model
-from sklearn import naive_bayes
-from sklearn import ensemble
 
-#model= linear_model.LogisticRegression(penalty=None, random_state=42,max_iter=1000000)
-#model=naive_bayes.BernoulliNB()
-#model=ensemble.RandomForestClassifier(random_state=42, min_samples_leaf=20,n_jobs=-1,
-         #                             n_estimators=500)
 
-model= tree.DecisionTreeClassifier(random_state=42, min_samples_leaf=20)
+model=ensemble.RandomForestClassifier(random_state=42,
+                                    n_jobs=2
+                                    )
 
+
+
+
+#Criando o grid
+
+params={
+    "min_samples_leaf":[15,20,25,30,50],
+    "n_estimators":[100,200,500,1000],
+    "criterion":['gini','entropy','log_loss'],
+
+}
+
+
+grid= model_selection.GridSearchCV( model, 
+                                   params, 
+                                   cv=3, 
+                                   scoring='roc_auc', 
+                                   verbose=4)
 model_pipeline=pipeline.Pipeline(steps=[('discetrizar',tree_discretization),
                                         ('onehot',onehot),
-                                        ('model',model)])
+                                        ('Grid',grid)])
 
-import mlflow 
+
 from sklearn import metrics 
 
 
@@ -142,15 +162,23 @@ print("AUC oot: ", auc_oot)
 
     
 # %%
-from matplotlib import pyplot as plt
+
 plt.plot(roc_train[0], roc_train[1])
 plt.plot(roc_test[0], roc_test[1])
 plt.plot(roc_oot[0], roc_oot[1])
 plt.grid(True)
 plt.title("Curva ROC")
+plt.xlabel("1-Especificidade")
+plt.ylabel("Sensibilidade")
 plt.legend([
     f"Treino : {100*auc_train:.2f}",
     f"Teste : {100*auc_test:.2f}",
     f"OOT : {100*auc_oot:.2f}" 
 ])
+# %%
+# Salvando o estado do nosso modelo
+model_df = pd.Series({"model": model_pipeline,
+                        "features": best_features,})
+
+model_df.to_pickle('model.pkl')
 # %%
