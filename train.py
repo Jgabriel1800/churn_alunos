@@ -83,7 +83,7 @@ best_features
 
 #Discretizar
 tree_discretization= discretisation.DecisionTreeDiscretiser(
-    variables = best_features, regression= False, cv=3
+    variables = best_features, regression= False,bin_output='bin_number', cv=3
 )
 
 
@@ -134,12 +134,12 @@ with mlflow.start_run():
 
 
 
-    model_pipeline.fit(X_train, y_train)
+    model_pipeline.fit(X_train[best_features], y_train)
 
 
 #ASSES
-    y_train_predict= model_pipeline.predict(X_train)
-    y_train_proba= model_pipeline.predict_proba(X_train)[:, 1]
+    y_train_predict= model_pipeline.predict(X_train[best_features])
+    y_train_proba= model_pipeline.predict_proba(X_train[best_features])[:, 1]
 
     acc_train= metrics.accuracy_score(y_train, y_train_predict)
     auc_train= metrics.roc_auc_score(y_train, y_train_proba)
@@ -147,8 +147,8 @@ with mlflow.start_run():
 
     print("Acurácia treino: ", acc_train)
     print("AUC treino: ", auc_train)
-    y_test_predict= model_pipeline.predict(X_test)
-    y_test_proba= model_pipeline.predict_proba(X_test)[:, 1]
+    y_test_predict= model_pipeline.predict(X_test[best_features])
+    y_test_proba= model_pipeline.predict_proba(X_test[best_features])[:, 1]
 
     acc_test= metrics.accuracy_score(y_test, y_test_predict)
     auc_test= metrics.roc_auc_score(y_test, y_test_proba)
@@ -158,8 +158,8 @@ with mlflow.start_run():
     print("AUC test: ", auc_test)
 
 
-    y_oot_predict= model_pipeline.predict(oot[features])
-    y_oot_proba= model_pipeline.predict_proba(oot[features])[:, 1]
+    y_oot_predict= model_pipeline.predict(oot[best_features])
+    y_oot_proba= model_pipeline.predict_proba(oot[best_features])[:, 1]
 
     acc_oot= metrics.accuracy_score(oot[target], y_oot_predict)
     auc_oot= metrics.roc_auc_score(oot[target], y_oot_proba)
@@ -192,10 +192,7 @@ plt.legend([
     f"Teste : {100*auc_test:.2f}",
     f"OOT : {100*auc_oot:.2f}" 
 ])
+plt.show()
 # %%
-# Salvando o estado do nosso modelo
-model_df = pd.Series({"model": model_pipeline,
-                        "features": best_features})
 
-model_df.to_pickle('model.pkl')
-# %%
+

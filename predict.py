@@ -1,24 +1,28 @@
-# 1. Carregar o modelo
 #%%
 import pandas as pd
-import mlflow
-import mlflow.sklearn
+import mlflow 
 
-model_df = pd.read_pickle("model.pkl")
-model = model_df['model']
-features = model_df['features']
+mlflow.set_tracking_uri("http://localhost:5000")
+# importe modelo
 
-#%%
-# 2. Carregar os dados para predição (OOT, novos alunos, etc)
-df = pd.read_csv("..\\churn_alunos\\data\\abt_alunos.csv")
-amostra = df[df['dtRef'] == df['dtRef'].max()].copy()
+models= mlflow.search_registered_models(filter_string="name='model_churn'")
+latest_version= max([i.version for i in models[0].latest_versions])
 
-# 3. Usar diretamente o DataFrame com TODAS as colunas (sem filtrar `features`)
-# Isso porque o pipeline interno já vai selecionar `best_features` na hora do `fit_transform`
-#%%
-# 4. Fazer a predição
-predicao = model.predict_proba(amostra)[:, 1]
+model= mlflow.sklearn.load_model(f"models:/model_churn/{latest_version}")
+features= model.feature_names_in_
 
-
-
+# %%
+#Importando os novos dados
+df=pd.read_csv('data/abt_alunos.csv', sep=',')
+amostra= df[df['dtRef']==df['dtRef'].max()].sample(3)
+amostra= amostra.drop('flagDesistencia',axis=1)
+# %%
+#Predicao
+predicao=model.predict_proba(amostra[features])[:, 1]
+amostra['proba_new']= predicao
+amostra
+# %%
+models= mlflow.search_registered_models(filter_string="name='model_churn'")
+latest_version= max([i.version for i in models[0].latest_versions])
+latest_version
 # %%
